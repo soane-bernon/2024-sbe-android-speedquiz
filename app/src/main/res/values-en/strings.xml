@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SpeedQuiz</string>
+    <string name="newPlayer">New player</string>
+    <string name="player1">Username player 1</string>
+    <string name="player2">Username player 2</string>
+    <string name="newGame">New game</string>
+    <string name="settings">Settings</string>
+    <string name="question">Questions</string>
+    <string name="about">About</string>
+    <string name="questionP2">Question player 2</string>
+    <string name="questionP1">Question player 1</string>
+    <string name="menu">MENU</string>
+    <string name="restart">PLAY AGAIN</string>
+    <string name="score">0</string>
+</resources>
