@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 public class Question {
     private final String intituler;
-    private final boolean reponse;
+    private final int reponse;
 
     /**
      * @return l'intitulé de la question
@@ -16,7 +16,7 @@ public class Question {
     /**
      * @return vrai si la réponse est vrai et faux sinon.
      */
-    public boolean isReponse() {
+    public int isReponse() {
         return reponse;
     }
 
@@ -25,16 +25,15 @@ public class Question {
      * @param intituler
      * @param reponse
      */
-    public Question(String intituler, boolean reponse) {
+    public Question(String intituler, int reponse) {
         this.reponse = reponse;
         this.intituler = intituler;
     }
-    /*
+
     public Question(Cursor cursor){
         intituler = cursor.getString(cursor.getColumnIndexOrThrow("question"));
         reponse = cursor.getInt(cursor.getColumnIndexOrThrow("reponse"));
     }
- */
 }
 
 

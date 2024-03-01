@@ -7,8 +7,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bernsoa.speedquiz.controle.GameManager;
+import com.bernsoa.speedquiz.modele.QuestionData;
+import com.bernsoa.speedquiz.modele.SpeedQuizSqlLite;
 import com.google.android.material.button.MaterialButton;
 public class GameActivity extends AppCompatActivity{
+    private GameManager gameManager = new GameManager();
+    private SpeedQuizSqlLite speedQuizSqlLite = new SpeedQuizSqlLite(this);
     private TextView TV_NamePlayer1;
     private TextView TV_NamePlayer2;
     private MaterialButton BT_ClicPlayer2;
@@ -19,6 +23,7 @@ public class GameActivity extends AppCompatActivity{
     private MaterialButton BT_Menu;
     private MaterialButton BT_ClicPlayer1;
     private TextView TV_QuestionPlayer1;
+    private RelativeLayout endButtons;
     Runnable questionRunnable=null;
     Handler handler;
 
@@ -36,6 +41,7 @@ public class GameActivity extends AppCompatActivity{
         BT_Menu = findViewById(R.id.menu);
         BT_ClicPlayer1 = findViewById(R.id.clicP1);
         TV_QuestionPlayer1 = findViewById(R.id.questionPlayer1);
+        endButtons = findViewById(R.id.end_buttons);
 
 
         Intent gameActivity = getIntent();
@@ -52,6 +58,10 @@ public class GameActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
+        gameManager.setGameActivity(this);
+        gameManager.questionData = new QuestionData(this);
+        gameManager.startTimer();
+
         BT_Menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,24 +75,42 @@ public class GameActivity extends AppCompatActivity{
                 recreate();
             }
         });
+
+        BT_ClicPlayer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameManager.answerQuestion(1);
+            }
+        });
+
+        BT_ClicPlayer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameManager.answerQuestion(2);
+            }
+        });
     }
 
-    /*
-    private void startQuestionIterative(){
-        handler = new Handler();
-        questionRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if ("fin de question ?") {
-                    // code fin de partie
-                    handler.removeCallbacks(this);
-                } else {
-                    // code pour poser une question
-                    handler.postDelayed(this, 2000);
-                }
-            }
-        };
-        handler.postDelayed(questionRunnable, 1000);
-    }*/
-}
+    /**
+     * Affiche la question passée en paramètre pour les deux joueurs
+     * @param question question a afficher
+     */
+    public void setQuestion(String question) {
+        TV_QuestionPlayer1.setText(question);
+        TV_QuestionPlayer2.setText(question);
+    }
 
+    /**
+     * Affiche les score des joueurs
+     * @param scoreP1 score du joueur 1
+     * @param scoreP2 score du joueur 2
+     */
+    public void setScores(int scoreP1, int scoreP2){
+        TV_ScorePlayer1.setText(String.valueOf(scoreP1));
+        TV_ScorePlayer2.setText(String.valueOf(scoreP2));
+    }
+
+    public RelativeLayout getEndButtons(){
+        return endButtons;
+    }
+}
